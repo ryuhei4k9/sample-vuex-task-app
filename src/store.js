@@ -38,7 +38,24 @@ export default new Vuex.Store({
     ],
 
     nextTaskId: 3,
-    nextLabelId: 4
+    nextLabelId: 4,
+
+    // フィルタするラベルのID
+    filter: null
+  },
+
+  getters: {
+    // フィルタリングしたタスクを返す
+    filteredTasks(state) {
+      // ラベルが選択されていなければ全体を返す
+      if (!state.filter) {
+        return state.tasks;
+      }
+
+      return state.tasks.filter(task => {
+        return task.labelIds.indexOf(state.filter) >= 0;
+      });
+    }
   },
 
   mutations: {
@@ -70,6 +87,10 @@ export default new Vuex.Store({
       });
 
       state.nextLabelId++;
+    },
+
+    changeFilter(state, { filter }) {
+      state.filter = filter;
     }
   },
   actions: {}
