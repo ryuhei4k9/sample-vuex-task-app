@@ -32,7 +32,7 @@
       </li>
     </ul>
 
-    <form v-on:submit.prevent="addTask">
+    <form v-on:submit.prevent="addLabel">
       <input type="text" v-model="newLabelText" placeholder="新しいラベル" />
     </form>
   </div>
