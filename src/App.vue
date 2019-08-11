@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "app",
@@ -123,13 +123,7 @@ export default {
       });
     },
 
-    save() {
-      this.$store.dispatch("save");
-    },
-
-    restore() {
-      this.$store.dispatch("restore");
-    }
+    ...mapActions(["save", "restore"])
   }
 };
 </script>
