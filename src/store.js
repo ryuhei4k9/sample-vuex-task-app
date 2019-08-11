@@ -59,7 +59,7 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    addTask(state, { name, labelIds }) {
+    registerTask(state, { name, labelIds }) {
       state.tasks.push({
         id: state.nextTaskId,
         name,
@@ -80,7 +80,7 @@ export default new Vuex.Store({
       });
     },
 
-    addLabel(state, { text }) {
+    registerLabel(state, { text }) {
       state.labels.push({
         id: state.nextLabelId,
         text

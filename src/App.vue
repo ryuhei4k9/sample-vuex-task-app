@@ -42,7 +42,7 @@
         <input
           type="radio"
           v-bind:checked="label.id === filter"
-          v-on:change="changeFilter(label.id)"
+          v-on:change="changeFilter({ filter: label.id })"
         />
         {{ label.text }}
       </li>
@@ -50,7 +50,7 @@
         <input
           type="radio"
           v-bind:checked="filter === null"
-          v-on:change="changeFilter(null)"
+          v-on:change="changeFilter({ filter: null })"
         />
         フィルタしない
       </li>
@@ -88,8 +88,8 @@ export default {
 
   methods: {
     addTask() {
-      // ストアのaddTaskミューテーションをコミットする
-      this.$store.commit("addTask", {
+      // mapMutationsでstoreのregisterTaskミューテーションをマッピングしているのでこの呼び方ができる
+      this.registerTask({
         name: this.newTaskName,
         labelIds: this.newTaskLabelIds
       });
@@ -98,7 +98,7 @@ export default {
     },
 
     addLabel() {
-      this.$store.commit("addLabel", {
+      this.registerLabel({
         text: this.newLabelText
       });
       this.newLabelText = "";
@@ -110,13 +110,7 @@ export default {
       return label ? label.text : "";
     },
 
-    changeFilter(labelId) {
-      this.$store.commit("changeFilter", {
-        filter: labelId
-      });
-    },
-
-    ...mapMutations(["toggleTaskStatus"]),
+    ...mapMutations(["registerTask", "toggleTaskStatus", "registerLabel", "changeFilter"]),
 
     ...mapActions(["save", "restore"])
   }
