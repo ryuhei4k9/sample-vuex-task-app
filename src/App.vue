@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
+
 export default {
   name: "app",
 
@@ -77,17 +79,11 @@ export default {
   },
 
   computed: {
-    tasks() {
-      return this.$store.getters.filteredTasks;
-    },
+    ...mapState(["labels", "filter"]),
 
-    labels() {
-      return this.$store.state.labels;
-    },
-
-    filter() {
-      return this.$store.state.filter;
-    }
+    ...mapGetters({
+      tasks: "filteredTasks"
+    })
   },
 
   methods: {
