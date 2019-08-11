@@ -5,7 +5,7 @@
       <li v-for="task in tasks" v-bind:key="task.id">
         <input
           type="checkbox"
-          v-bind:checked="tasks.done"
+          v-bind:checked="task.done"
           v-on:change="toggleTaskStatus(task)"
         />
         {{ task.name }}
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "app",
@@ -97,13 +97,6 @@ export default {
       this.newTaskLabelIds = [];
     },
 
-    toggleTaskStatus(task) {
-      // ストアのtoggleTaskStatusミューテーションをコミットする
-      this.$store.commit("toggleTaskStatus", {
-        id: task.id
-      });
-    },
-
     addLabel() {
       this.$store.commit("addLabel", {
         text: this.newLabelText
@@ -122,6 +115,8 @@ export default {
         filter: labelId
       });
     },
+
+    ...mapMutations(["toggleTaskStatus"]),
 
     ...mapActions(["save", "restore"])
   }
