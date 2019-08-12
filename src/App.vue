@@ -16,7 +16,7 @@
       </li>
     </ul>
 
-    <form v-on:submit.prevent="addTask">
+    <form v-on:submit.prevent="registerTask">
       <input type="text" v-model="newTaskName" placeholder="新しいタスク" />
     </form>
 
@@ -32,7 +32,7 @@
       </li>
     </ul>
 
-    <form v-on:submit.prevent="addLabel">
+    <form v-on:submit.prevent="registerLabel">
       <input type="text" v-model="newLabelText" placeholder="新しいラベル" />
     </form>
 
@@ -87,20 +87,21 @@ export default {
   },
 
   methods: {
-    addTask() {
-      // mapMutationsでstoreのregisterTaskミューテーションをマッピングしているのでこの呼び方ができる
-      this.registerTask({
+    registerTask() {
+      this.addTask({
         name: this.newTaskName,
         labelIds: this.newTaskLabelIds
       });
+
       this.newTaskName = "";
       this.newTaskLabelIds = [];
     },
 
-    addLabel() {
-      this.registerLabel({
+    registerLabel() {
+      this.addLabel({
         text: this.newLabelText
       });
+
       this.newLabelText = "";
     },
 
@@ -110,7 +111,12 @@ export default {
       return label ? label.text : "";
     },
 
-    ...mapMutations(["registerTask", "toggleTaskStatus", "registerLabel", "changeFilter"]),
+    ...mapMutations([
+      "addTask",
+      "toggleTaskStatus",
+      "addLabel",
+      "changeFilter"
+    ]),
 
     ...mapActions(["save", "restore"])
   }
